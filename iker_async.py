@@ -55,7 +55,10 @@ class ModbusTcpProtocol(protocol.Protocol):
         if _logger.isEnabledFor(logging.DEBUG):
             
             _logger.debug(" ".join([hex(ord(x)) for x in data]))
+
+            
         if not self.factory.control.ListenOnly:
+
             self.framer.processIncomingPacket(data, self._execute)
            
 
@@ -69,19 +72,32 @@ class ModbusTcpProtocol(protocol.Protocol):
             response = request.execute(context)
 ###############################IKER'S ADDITION ################################
             if _logger.isEnabledFor(logging.DEBUG):
-                ikerco = self.factory.store[request.unit_id].getValues(1,1,6)
+                ikerco = self.factory.store[request.unit_id].getValues(1,0,6)
                 _logger.debug(" Values of the COILS   " + repr(ikerco))
-                ikerhr = self.factory.store[request.unit_id].getValues(3,1,6)
+                ikerhr = self.factory.store[request.unit_id].getValues(3,0,6)
                 _logger.debug(" VAlues of the Registers   " + repr(ikerhr))
-###############################################################################               
-#                file = open('rpvalues.txt', 'w')
-#                file.write('test1')
-#                file.write('test2')
-#                file.close()
-                
-
-                
-                
+                file = open('values.txt', 'w')
+                file.write(repr(ikerco[0]))
+                file.write('\n')
+                file.write(repr(ikerco[1]))
+                file.write('\n')
+                file.write(repr(ikerco[2]))
+                file.write('\n')
+                file.write(repr(ikerco[3]))
+                file.write('\n')
+                file.write(repr(ikerco[4]))
+                file.write('\n')
+                file.write(repr(ikerhr[0]))
+                file.write('\n')
+                file.write(repr(ikerhr[1]))
+                file.write('\n')
+                file.write(repr(ikerhr[2]))
+                file.write('\n')
+                file.write(repr(ikerhr[3]))
+                file.write('\n')
+                file.write(repr(ikerhr[4]))
+                file.write('\n')
+                file.close()
                 
 ###############################################################################
         except Exception, ex:
